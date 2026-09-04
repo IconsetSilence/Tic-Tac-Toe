@@ -1,19 +1,21 @@
 using System;
 using TriInspector;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace TicTacToe.Gameplay
 {
     [HideMonoScript]
-    public class Mark : MonoBehaviour
+    public class Mark : MonoBehaviour, IPointerClickHandler
     {
         [Title("Figures")]
         [LabelText("Cross"), SerializeField] private GameObject _crossFigure;
         [LabelText("Nought"), SerializeField] private GameObject _noughtFigure;
+        [Title("Definition")]
+        [SerializeField] private MarkState _figureDefinitionOnClick = MarkState.Cross;
 
         private MarkState _state = MarkState.Empty;
 
-        [Title("Definition")]
         [LabelText("Current State"), ReadOnly, ShowInInspector] public MarkState State
         {
             get => _state;
@@ -23,12 +25,12 @@ namespace TicTacToe.Gameplay
                     throw new NullReferenceException("Set figure`s game objects");
 
                 _state = value;
-                SetStateRender();
+                Render();
             }
         }
 
         public bool Free => _state == MarkState.Empty;
-        
+
         [PropertySpace(8), Button]
         public void DrawCross() => State = MarkState.Cross;
 
@@ -38,7 +40,15 @@ namespace TicTacToe.Gameplay
         [Button]
         public void Clear() => State = MarkState.Empty;
 
-        private void SetStateRender()
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (_figureDefinitionOnClick == MarkState.Empty)
+                throw new UnityException("In Definition, the player cannot select an empty mark");
+
+            State = _figureDefinitionOnClick;
+        }
+
+        private void Render()
         {
             _crossFigure.SetActive(_state == MarkState.Cross);
             _noughtFigure.SetActive(_state == MarkState.Nought);
