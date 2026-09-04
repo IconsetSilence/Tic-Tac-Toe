@@ -11,11 +11,10 @@ namespace TicTacToe.Gameplay
         [Title("Figures")]
         [LabelText("Cross"), SerializeField] private GameObject _crossFigure;
         [LabelText("Nought"), SerializeField] private GameObject _noughtFigure;
-        [Title("Definition")]
-        [SerializeField] private MarkState _figureDefinitionOnClick = MarkState.Cross;
 
         private MarkState _state = MarkState.Empty;
 
+        [Title("Definition")]
         [LabelText("Current State"), ReadOnly, ShowInInspector] public MarkState State
         {
             get => _state;
@@ -28,6 +27,8 @@ namespace TicTacToe.Gameplay
                 Render();
             }
         }
+
+        [ShowInInspector] public MarkState FigureDefinitionOnClick { get; set; } = MarkState.Cross;
 
         public bool Free => _state == MarkState.Empty;
 
@@ -42,10 +43,10 @@ namespace TicTacToe.Gameplay
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (_figureDefinitionOnClick == MarkState.Empty)
+            if (FigureDefinitionOnClick == MarkState.Empty)
                 throw new UnityException("In Definition, the player cannot select an empty mark");
-
-            State = _figureDefinitionOnClick;
+            else if (Free)
+                State = FigureDefinitionOnClick;
         }
 
         private void Render()
