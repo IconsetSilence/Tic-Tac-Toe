@@ -29,7 +29,7 @@ namespace TicTacToe.Gameplay
             }
         }
 
-        [ShowInInspector] public MarkState FigureDefinitionOnClick { get; set; } = MarkState.Cross;
+        [ShowInInspector] public Figure FigureDefinitionOnClick { get; set; } = Figure.Cross;
 
         public bool Free => _state == MarkState.Empty;
 
@@ -44,13 +44,31 @@ namespace TicTacToe.Gameplay
         [Button]
         public void Clear() => State = MarkState.Empty;
 
+        public static Figure ConvertMarkStateToFigure(MarkState markState)
+        {
+            return markState switch
+            {
+                MarkState.Cross => Figure.Cross,
+                MarkState.Nought => Figure.Nought,
+                _ => throw new ArgumentException($"Cannot {MarkState.Empty} be converted to type {nameof(Figure)}")
+            };
+        }
+
+        public static MarkState ConvertFigureToMarkState(Figure figure)
+        {
+            return figure switch
+            {
+                Figure.Cross => MarkState.Cross,
+                Figure.Nought => MarkState.Nought,
+                _ => default
+            };
+        }
+
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (FigureDefinitionOnClick == MarkState.Empty)
-                throw new UnityException("In Definition, the player cannot select an empty mark");
-            else if (Free && _matchSystem.CurrentTurn == Turn.Player)
+            if (Free && _matchSystem.CurrentTurn == Turn.Player)
             {
-                State = FigureDefinitionOnClick;
+                State = ConvertFigureToMarkState(FigureDefinitionOnClick);
                 _matchSystem.EndTurn();
             }
         }
@@ -65,6 +83,12 @@ namespace TicTacToe.Gameplay
     public enum MarkState
     {
         Empty,
+        Cross,
+        Nought
+    }
+
+    public enum Figure
+    {
         Cross,
         Nought
     }

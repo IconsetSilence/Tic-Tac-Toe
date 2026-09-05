@@ -165,6 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _field: {fileID: 2108266704}
   _matchSystem: {fileID: 105015031}
+  _figureOnDraw: 1
   _minTurnTime: 3
   _maxTurnTime: 7.5
 --- !u!1 &105015030

@@ -19,15 +19,12 @@ namespace TicTacToe.Gameplay
         private void Awake() => _marks = GetComponentsInChildren<Mark>(false);
 
         [PropertySpace(8), Button]
-        public void SetFigureDifinitionsOnClick(MarkState state = MarkState.Cross)
+        public void SetFigureDifinitionsOnClick(Figure figure)
         {
-            if (state == MarkState.Empty)
-                throw new UnityException("In Definition, the player cannot select an empty mark");
-
             var freeMarks = _marks.Where(mark => mark.Free).Select(mark => mark);
 
             foreach (var mark in freeMarks)
-                mark.FigureDefinitionOnClick = state;
+                mark.FigureDefinitionOnClick = figure;
         }
     }
 }
