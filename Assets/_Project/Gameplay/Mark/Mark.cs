@@ -51,7 +51,7 @@ namespace TicTacToe.Gameplay
             else if (Free && _matchSystem.CurrentTurn == Turn.Player)
             {
                 State = FigureDefinitionOnClick;
-                _matchSystem.EndTurn(_matchSystem.CurrentTurn);
+                _matchSystem.EndTurn();
             }
         }
 

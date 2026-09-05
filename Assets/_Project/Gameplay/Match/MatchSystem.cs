@@ -11,7 +11,7 @@ namespace TicTacToe.Gameplay
 
         [ReadOnly, ShowInInspector] public Turn CurrentTurn { get; private set; }
 
-        private void Awake() => Begin();
+        private void Start() => Begin();
 
         public void Begin()
         {
@@ -21,10 +21,10 @@ namespace TicTacToe.Gameplay
             NextTurn?.Invoke(firstTurn);
         }
 
-        public void EndTurn(Turn turn)
+        public void EndTurn()
         {
-            CurrentTurn = GetTurnOpposite(turn);
-            NextTurn?.Invoke(GetTurnOpposite(turn));
+            CurrentTurn = GetTurnOpposite(CurrentTurn);
+            NextTurn?.Invoke(CurrentTurn);
         }
 
         private Turn GetTurnOpposite(Turn turn) => turn == Turn.Player ? Turn.Enemy : Turn.Player;

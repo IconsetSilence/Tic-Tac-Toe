@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using TriInspector;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace TicTacToe.Gameplay
         private Mark[] _marks;
 
         public MatchSystem MatchSystem => _matchSystem;
+
+        public IEnumerable<Mark> Marks => _marks;
 
         private void Awake() => _marks = GetComponentsInChildren<Mark>(false);
 
