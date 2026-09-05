@@ -7,11 +7,15 @@ namespace TicTacToe.Gameplay
     [HideMonoScript]
     public class Field : MonoBehaviour
     {
+        [SerializeField] private MatchSystem _matchSystem;
+
         private Mark[] _marks;
+
+        public MatchSystem MatchSystem => _matchSystem;
 
         private void Awake() => _marks = GetComponentsInChildren<Mark>(false);
 
-        [Button]
+        [PropertySpace(8), Button]
         public void SetFigureDifinitionsOnClick(MarkState state = MarkState.Cross)
         {
             if (state == MarkState.Empty)

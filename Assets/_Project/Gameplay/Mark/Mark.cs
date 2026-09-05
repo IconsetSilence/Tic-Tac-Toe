@@ -12,6 +12,7 @@ namespace TicTacToe.Gameplay
         [LabelText("Cross"), SerializeField] private GameObject _crossFigure;
         [LabelText("Nought"), SerializeField] private GameObject _noughtFigure;
 
+        private MatchSystem _matchSystem;
         private MarkState _state = MarkState.Empty;
 
         [Title("Definition")]
@@ -32,6 +33,8 @@ namespace TicTacToe.Gameplay
 
         public bool Free => _state == MarkState.Empty;
 
+        private void Awake() => _matchSystem = GetComponentInParent<Field>().MatchSystem;
+
         [PropertySpace(8), Button]
         public void DrawCross() => State = MarkState.Cross;
 
@@ -45,8 +48,11 @@ namespace TicTacToe.Gameplay
         {
             if (FigureDefinitionOnClick == MarkState.Empty)
                 throw new UnityException("In Definition, the player cannot select an empty mark");
-            else if (Free)
+            else if (Free && _matchSystem.CurrentTurn == Turn.Player)
+            {
                 State = FigureDefinitionOnClick;
+                _matchSystem.EndTurn(_matchSystem.CurrentTurn);
+            }
         }
 
         private void Render()
