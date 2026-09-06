@@ -32,7 +32,7 @@ namespace TicTacToe.Gameplay
         [PropertySpace(8), Button]
         public void SetFigureDifinitionsOnClick(Figure figure)
         {
-            var freeMarks = _marks.Where(mark => mark.Free).Select(mark => mark);
+            var freeMarks = _marks.Where(mark => mark.Free);
 
             foreach (var mark in freeMarks)
                 mark.FigureDefinitionOnClick = figure;
