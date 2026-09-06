@@ -13,10 +13,20 @@ namespace TicTacToe.Gameplay
 
         private void Awake() => _text = GetComponent<TextMesh>();
 
-        private void OnEnable() => _matchSystem.NextTurn += OnNextTurn;
+        private void OnEnable()
+        {
+            _matchSystem.NextTurn += OnNextTurn;
+            _matchSystem.GameOver += OnGameOver;
+        }
 
-        private void OnDisable() => _matchSystem.NextTurn -= OnNextTurn;
+        private void OnDisable()
+        {
+            _matchSystem.NextTurn -= OnNextTurn;
+            _matchSystem.GameOver -= OnGameOver;
+        }
 
         private void OnNextTurn(Turn turn) => _text.text = turn.ToString();
+
+        private void OnGameOver() => _text.text = "Game Over";
     }
 }
