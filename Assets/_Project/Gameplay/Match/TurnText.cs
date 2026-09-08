@@ -27,6 +27,6 @@ namespace TicTacToe.Gameplay
 
         private void OnNextTurn(Turn turn) => _text.text = turn.ToString();
 
-        private void OnGameOver() => _text.text = "Game Over";
+        private void OnGameOver(MatchResult matchResult) => _text.text = matchResult.ToString();
     }
 }

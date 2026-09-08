@@ -7,11 +7,15 @@ namespace TicTacToe.Gameplay
     [HideMonoScript]
     public class MatchSystem : MonoBehaviour
     {
-        public event Action GameOver;
+        public event Action<MatchResult> GameOver;
         public event Action<Turn> NextTurn;
 
         [SerializeField] private Field _field;
+        [ReadOnly, SerializeField] private MatchResult _result;
+
         [ReadOnly, ShowInInspector] public Turn CurrentTurn { get; private set; }
+
+        public MatchResult Result => _result;
 
         private void Start() => Begin();
 
@@ -25,8 +29,8 @@ namespace TicTacToe.Gameplay
 
         public void EndTurn()
         {
-            if (IsGameOver())
-                GameOver?.Invoke();
+            if (TryGetMatchResult(out _result))
+                GameOver?.Invoke(_result);
             else
             {
                 CurrentTurn = GetTurnOpposite(CurrentTurn);
@@ -42,15 +46,29 @@ namespace TicTacToe.Gameplay
             return num == 1 ? Turn.Player : Turn.Enemy;
         }
 
-        private bool IsGameOver()
+        private bool TryGetMatchResult(out MatchResult result)
         {
             if (_field.NoFreeMarks())
+            {
+                result = MatchResult.Draw;
                 return true;
+            }
 
             foreach (var line in _field.Lines)
-                if (line.CheckCrossLine() || line.CheckNoughtLine())
+            {
+                if (line.CheckCrossLine())
+                {
+                    result = MatchResult.Victory;
                     return true;
+                }
+                else if (line.CheckNoughtLine())
+                {
+                    result = MatchResult.Defeat;
+                    return true;
+                }
+            }
 
+            result = MatchResult.None;
             return false;
         }
     }
@@ -59,5 +77,13 @@ namespace TicTacToe.Gameplay
     {
         Player,
         Enemy
+    }
+
+    public enum MatchResult
+    {
+        None,
+        Victory,
+        Defeat,
+        Draw
     }
 }
