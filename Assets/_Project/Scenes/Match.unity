@@ -198,6 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _field: {fileID: 2108266704}
+  _newMatchInSeconds: 5
   _result: 0
 --- !u!4 &105015032
 Transform:

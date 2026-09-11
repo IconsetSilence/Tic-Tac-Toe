@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using TriInspector;
 using UnityEngine;
@@ -9,18 +10,22 @@ namespace TicTacToe.Gameplay
     {
         public event Action<MatchResult> GameOver;
         public event Action<Turn> NextTurn;
+        public event Action NewMatch;
 
         [SerializeField] private Field _field;
+        [Min(0), SerializeField] private float _newMatchInSeconds = 5f;
         [ReadOnly, SerializeField] private MatchResult _result;
 
         [ReadOnly, ShowInInspector] public Turn CurrentTurn { get; private set; }
 
         public MatchResult Result => _result;
 
-        private void Start() => Begin();
+        private void Start() => StartNewMatch();
 
-        public void Begin()
+        public void StartNewMatch()
         {
+            NewMatch?.Invoke();
+
             var firstTurn = GetRandomTurn();
 
             CurrentTurn = firstTurn;
@@ -30,12 +35,21 @@ namespace TicTacToe.Gameplay
         public void EndTurn()
         {
             if (TryGetMatchResult(out _result))
-                GameOver?.Invoke(_result);
+                EndMatch().Forget();
             else
             {
                 CurrentTurn = GetTurnOpposite(CurrentTurn);
                 NextTurn?.Invoke(CurrentTurn);
             }
+        }
+
+        private async UniTask EndMatch()
+        {
+            GameOver?.Invoke(_result);
+
+            await UniTask.WaitForSeconds(_newMatchInSeconds);
+
+            StartNewMatch();
         }
 
         private Turn GetTurnOpposite(Turn turn) => turn == Turn.Player ? Turn.Enemy : Turn.Player;
