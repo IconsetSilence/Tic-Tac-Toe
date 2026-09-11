@@ -163,12 +163,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: c7ee3a742d485b94c813e75f21a629c5, type: 3}
+  m_Sprite: {fileID: -1360003283, guid: ed40951306f1ef244a1f8dcc1eaa83bc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 1.5, y: 1.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -250,12 +250,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 99fdd7a68f6da9b4aa6a60ed8a9f9138, type: 3}
+  m_Sprite: {fileID: -1562984036, guid: f51831047002343489fe5be7103116de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 1.5, y: 1.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -311,7 +311,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _crossFigure: {fileID: 5772242585884128590}
   _noughtFigure: {fileID: 3609601411671856982}
-  _figureDefinitionOnClick: 1
 --- !u!61 &7332385797972275015
 BoxCollider2D:
   m_ObjectHideFlags: 0
