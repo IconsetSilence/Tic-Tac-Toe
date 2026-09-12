@@ -1,0 +1,20 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/UI/Match/Match.uss?fileID=7433441132597879392&amp;guid=2976adefe97c78145a8d68cea504205c&amp;type=3#Match" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement name="counter" style="flex-grow: 1;">
+            <ui:Label text="Player&#10;0" name="player-count" class="count" />
+            <ui:Label text="Enemy&#10;0" name="enemy-count" class="count" />
+        </ui:VisualElement>
+        <ui:VisualElement name="field">
+            <ui:Button name="mark-1" class="mark" />
+            <ui:Button name="mark-2" class="mark" />
+            <ui:Button name="mark-3" class="mark" />
+            <ui:Button name="mark-4" class="mark" />
+            <ui:Button name="mark-5" class="mark" />
+            <ui:Button name="mark-6" class="mark" />
+            <ui:Button name="mark-7" class="mark" />
+            <ui:Button name="mark-8" class="mark" />
+            <ui:Button name="mark-9" class="mark" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
