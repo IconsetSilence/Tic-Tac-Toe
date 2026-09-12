@@ -1,0 +1,52 @@
+#Logo {
+    position: absolute;
+    background-image: url("project://database/Assets/ThirdParty/tic-tac-toe/tic-tac-toe.png?fileID=2800000&guid=f61b2d8daddeae1428f46bb423bdfcec&type=3#tic-tac-toe");
+    -unity-background-scale-mode: scale-to-fit;
+    top: 20px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    align-items: center;
+    align-self: center;
+    justify-content: flex-end;
+    align-content: flex-end;
+    scale: 0.5 0.5;
+    transform-origin: top;
+}
+
+.std-button {
+    align-self: center;
+    width: 40%;
+    height: 17.5%;
+    margin-top: 30px;
+    margin-right: 30px;
+    margin-bottom: 30px;
+    margin-left: 30px;
+    font-size: 125px;
+    -unity-font-style: normal;
+    color: rgb(255, 255, 255);
+    bottom: auto;
+    top: 550px;
+    background-image: url("project://database/Assets/ThirdParty/CasualGameButtonsVol02/CGB02-blue_L_btn.png?fileID=-1573344661467012158&guid=b9bb3e95f0ba711418a04c7c0bb8bf33&type=3#CGB02-blue_L_btn_0");
+    background-color: rgba(0, 0, 0, 0);
+    -unity-text-outline-color: rgb(255, 255, 255);
+    -unity-text-outline-width: 3px;
+    -unity-text-align: middle-center;
+    -unity-background-scale-mode: scale-to-fit;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.std-button:hover {
+    -unity-background-image-tint-color: rgb(200, 200, 200);
+    color: rgb(200, 200, 200);
+    -unity-text-outline-color: rgb(200, 200, 200);
+}
+
+.std-button:active {
+    -unity-background-image-tint-color: rgb(100, 100, 100);
+    color: rgb(100, 100, 100);
+    -unity-text-outline-color: rgb(100, 100, 100);
+}
