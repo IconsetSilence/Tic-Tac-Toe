@@ -10,7 +10,7 @@ namespace TicTacToe.Gameplay
     {
         [SerializeField] private Field _field;
         [SerializeField] private MatchSystem _matchSystem;
-        [SerializeField] private Figure _figureOnDraw = Figure.Nought;
+
         [Title("Turn Time")]
         [Min(0), SerializeField] private float _minTurnTime = 3f;
         [Min(0), SerializeField] private float _maxTurnTime = 7.5f;
@@ -38,12 +38,6 @@ namespace TicTacToe.Gameplay
             _matchSystem.EndTurn();
         }
 
-        private void DrawSome(Mark mark)
-        {
-            if (_figureOnDraw == Figure.Cross)
-                mark.DrawCross();
-            else if (_figureOnDraw == Figure.Nought)
-                mark.DrawNought();
-        }
+        private void DrawSome(Mark mark) => mark.State = MarkState.Nought;
     }
 }

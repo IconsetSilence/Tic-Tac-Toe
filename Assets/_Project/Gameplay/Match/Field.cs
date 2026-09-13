@@ -29,18 +29,9 @@ namespace TicTacToe.Gameplay
             Lines = _horizontalLines.Concat(_verticalLines).Concat(_diagonalLines);
         }
 
-        private void OnEnable() => _matchSystem.NewMatch += ClearAllMarks;
+        private void OnEnable() => _matchSystem.NewMatch += Clear;
 
-        private void OnDisable() => _matchSystem.NewMatch -= ClearAllMarks;
-
-        [PropertySpace(8), Button]
-        public void SetFigureDifinitionsOnClick(Figure figure)
-        {
-            var freeMarks = _marks.Where(mark => mark.Free);
-
-            foreach (var mark in freeMarks)
-                mark.FigureDefinitionOnClick = figure;
-        }
+        private void OnDisable() => _matchSystem.NewMatch -= Clear;
 
         public bool NoFreeMarks()
         {
@@ -48,12 +39,12 @@ namespace TicTacToe.Gameplay
             return noFreeMarks.Count() == MaxMarkCount;
         }
 
-        private void ClearAllMarks()
+        private void Clear()
         {
             var freeMarks = _marks.Where(mark => mark.Free == false);
 
             foreach (var mark in freeMarks)
-                mark.Clear();
+                mark.State = MarkState.Empty;
         }
     }
 }
