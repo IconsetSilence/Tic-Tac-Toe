@@ -183,6 +183,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 637adb07d3415064f82bfedf26221fac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerTurnColor: {r: 1, g: 0, b: 0, a: 1}
+  _enemyTurnColor: {r: 0.007843138, g: 0.17254902, b: 0.9803922, a: 1}
+  _defaultTurnColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1140843997
 GameObject:
   m_ObjectHideFlags: 0

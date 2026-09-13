@@ -3,13 +3,17 @@
     <ui:VisualElement style="flex-grow: 1;">
         <ui:VisualElement name="counter">
             <ui:VisualElement name="player-counter">
-                <ui:Label text="Player" name="player-name" />
-                <ui:Label text="0" name="player-count" />
+                <ui:Label text="Player" name="player-name" class="standard-text" />
+                <ui:Label text="0" name="player-count" class="standard-text" />
             </ui:VisualElement>
             <ui:VisualElement name="enemy-counter">
-                <ui:Label text="Enemy" name="enemy-name" />
-                <ui:Label text="0" name="enemy-count" />
+                <ui:Label text="Enemy" name="enemy-name" class="standard-text" />
+                <ui:Label text="0" name="enemy-count" class="standard-text" />
             </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="turn">
+            <ui:Label text="Turn" name="turn-text" class="standard-text" />
+            <ui:Label text="Anyone" name="turn-anyone" class="standard-text" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
