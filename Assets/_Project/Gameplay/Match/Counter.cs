@@ -71,10 +71,4 @@ namespace TicTacToe.Gameplay
             SaveData();
         }
     }
-
-    [Serializable]
-    public struct CountData
-    {
-        public int PlayerPoints, EnemyPoints;
-    }
 }

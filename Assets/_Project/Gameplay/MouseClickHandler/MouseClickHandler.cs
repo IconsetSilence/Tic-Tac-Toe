@@ -32,7 +32,7 @@ namespace TicTacToe.Gameplay
 
         private void CheckMark()
         {
-            if (_canClickOnMark)
+            if (_canClickOnMark && _matchSystem.MatchActive)
             {
                 Vector2 mousePosition = Mouse.current.position.ReadValue();
                 Ray ray= _camera.ScreenPointToRay(mousePosition);

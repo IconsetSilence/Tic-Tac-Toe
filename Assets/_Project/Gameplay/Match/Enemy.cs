@@ -34,8 +34,11 @@ namespace TicTacToe.Gameplay
 
             await UniTask.WaitForSeconds(turnTime, cancellationToken: destroyCancellationToken);
 
-            DrawSome(randomMark);
-            _matchSystem.EndTurn();
+            if (_matchSystem.MatchActive)
+            {
+                DrawSome(randomMark);
+                _matchSystem.EndTurn();
+            }
         }
 
         private void DrawSome(Mark mark) => mark.State = MarkState.Nought;

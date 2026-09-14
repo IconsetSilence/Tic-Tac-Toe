@@ -40,6 +40,4 @@ namespace TicTacToe.Gameplay
     }
 
     public enum MarkState { Empty, Cross, Nought }
-
-    public enum Figure { Cross, Nought }
 }
