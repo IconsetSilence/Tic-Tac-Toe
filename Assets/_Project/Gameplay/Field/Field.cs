@@ -9,6 +9,7 @@ namespace TicTacToe.Gameplay
     public class Field : MonoBehaviour
     {
         [SerializeField] private MatchSystem _matchSystem;
+        [SerializeField] private GameObject _marksContainer;
         [Title("Lines")]
         [LabelText("Horizontal"), SerializeField] private Line[] _horizontalLines;
         [LabelText("Vertical"), SerializeField] private Line[] _verticalLines;
@@ -25,22 +26,13 @@ namespace TicTacToe.Gameplay
 
         private void Awake()
         {
-            _marks = GetComponentsInChildren<Mark>(false);
+            _marks = _marksContainer.GetComponentsInChildren<Mark>();
             Lines = _horizontalLines.Concat(_verticalLines).Concat(_diagonalLines);
         }
 
-        private void OnEnable() => _matchSystem.NewMatch += ClearAllMarks;
+        private void OnEnable() => _matchSystem.NewMatch += Clear;
 
-        private void OnDisable() => _matchSystem.NewMatch -= ClearAllMarks;
-
-        [PropertySpace(8), Button]
-        public void SetFigureDifinitionsOnClick(Figure figure)
-        {
-            var freeMarks = _marks.Where(mark => mark.Free);
-
-            foreach (var mark in freeMarks)
-                mark.FigureDefinitionOnClick = figure;
-        }
+        private void OnDisable() => _matchSystem.NewMatch -= Clear;
 
         public bool NoFreeMarks()
         {
@@ -48,12 +40,14 @@ namespace TicTacToe.Gameplay
             return noFreeMarks.Count() == MaxMarkCount;
         }
 
-        private void ClearAllMarks()
+        [PropertySpace(16)]
+        [EnableInPlayMode, Button]
+        public void Clear()
         {
             var freeMarks = _marks.Where(mark => mark.Free == false);
 
             foreach (var mark in freeMarks)
-                mark.Clear();
+                mark.State = MarkState.Empty;
         }
     }
 }

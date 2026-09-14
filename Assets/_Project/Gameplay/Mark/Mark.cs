@@ -1,95 +1,43 @@
 using System;
 using TriInspector;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace TicTacToe.Gameplay
 {
     [HideMonoScript]
-    public class Mark : MonoBehaviour, IPointerClickHandler
+    public class Mark : MonoBehaviour
     {
-        [Title("Figures")]
-        [LabelText("Cross"), SerializeField] private GameObject _crossFigure;
-        [LabelText("Nought"), SerializeField] private GameObject _noughtFigure;
+        public event Action<MarkState> ChangeState;
+        private MarkState _state;
 
-        private MatchSystem _matchSystem;
-        private MarkState _state = MarkState.Empty;
-
-        [Title("Definition")]
-        [LabelText("Current State"), ReadOnly, ShowInInspector] public MarkState State
+        [ShowInInspector]
+        public MarkState State
         {
             get => _state;
             set
             {
-                if (_crossFigure == null || _noughtFigure == null)
-                    throw new NullReferenceException("Set figure`s game objects");
-
                 _state = value;
-                Render();
+                ChangeState?.Invoke(value);
             }
         }
 
-        [ShowInInspector] public Figure FigureDefinitionOnClick { get; set; } = Figure.Cross;
+        [ShowInInspector]
+        public bool Free => State == MarkState.Empty;
 
-        public bool Free => _state == MarkState.Empty;
-
-        private void Awake() => _matchSystem = GetComponentInParent<Field>().MatchSystem;
-
-        [PropertySpace(8), Button]
-        public void DrawCross() => State = MarkState.Cross;
-
-        [Button]
-        public void DrawNought() => State = MarkState.Nought;
-
-        [Button]
-        public void Clear() => State = MarkState.Empty;
-
-        public static Figure ConvertMarkStateToFigure(MarkState markState)
+        public static MarkState ConvertFigureToMarkState(Figure figure) => figure switch
         {
-            return markState switch
-            {
-                MarkState.Cross => Figure.Cross,
-                MarkState.Nought => Figure.Nought,
-                _ => throw new ArgumentException($"Cannot {MarkState.Empty} be converted to type {nameof(Figure)}")
-            };
-        }
+            Figure.Cross => MarkState.Cross,
+            Figure.Nought => MarkState.Nought,
+            _ => throw new ArgumentException()
+        };
 
-        public static MarkState ConvertFigureToMarkState(Figure figure)
+        public static Figure ConvertMarkStateToFigure(MarkState state) => state switch
         {
-            return figure switch
-            {
-                Figure.Cross => MarkState.Cross,
-                Figure.Nought => MarkState.Nought,
-                _ => default
-            };
-        }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (Free && _matchSystem.CurrentTurn == Turn.Player)
-            {
-                State = ConvertFigureToMarkState(FigureDefinitionOnClick);
-                _matchSystem.EndTurn();
-            }
-        }
-
-        private void Render()
-        {
-            _crossFigure.SetActive(_state == MarkState.Cross);
-            _noughtFigure.SetActive(_state == MarkState.Nought);
-        }
+            MarkState.Cross => Figure.Cross,
+            MarkState.Nought => Figure.Nought,
+            _ => throw new ArgumentException("\"Figure\" doesn`t have an empty state")
+        };
     }
 
-    public enum MarkState
-    {
-        Empty,
-        Cross,
-        Nought
-    }
-
-    public enum Figure
-    {
-        Cross,
-        Nought
-    }
+    public enum MarkState { Empty, Cross, Nought }
 }

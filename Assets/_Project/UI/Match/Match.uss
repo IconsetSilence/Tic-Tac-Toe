@@ -1,0 +1,38 @@
+.standard-text {
+    font-size: 80px;
+    -unity-text-align: middle-center;
+    -unity-text-outline-width: 2px;
+    letter-spacing: 2px;
+}
+
+#counter {
+    align-self: center;
+    flex-direction: row;
+}
+
+#player-counter {
+    color: rgb(255, 0, 0);
+    -unity-text-outline-color: rgb(255, 0, 0);
+    margin-right: 40px;
+}
+
+#enemy-counter {
+    color: rgb(0, 93, 255);
+    -unity-text-outline-color: rgb(0, 43, 255);
+}
+
+#turn {
+    position: absolute;
+    right: 100px;
+    top: 35px;
+}
+
+#turn-text {
+    color: rgb(11, 255, 0);
+    -unity-text-outline-color: rgb(24, 255, 0);
+}
+
+#turn-anyone {
+    color: rgb(255, 255, 255);
+    -unity-text-outline-color: rgb(255, 255, 255);
+}

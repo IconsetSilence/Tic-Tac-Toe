@@ -20,6 +20,8 @@ namespace TicTacToe.Gameplay
 
         public MatchResult Result => _result;
 
+        public bool MatchActive => _result == MatchResult.None;
+
         private void Start() => StartNewMatch();
 
         public void StartNewMatch()
@@ -61,36 +63,30 @@ namespace TicTacToe.Gameplay
         }
 
         private bool TryGetMatchResult(out MatchResult result)
-        {
-            if (_field.NoFreeMarks())
-            {
-                result = MatchResult.Draw;
-                return true;
-            }
-
+        {            
             foreach (var line in _field.Lines)
             {
-                if (line.CheckCrossLine())
+                if (line.CheckLineCompliance(Figure.Cross))
                 {
                     result = MatchResult.Victory;
                     return true;
                 }
-                else if (line.CheckNoughtLine())
+                else if (line.CheckLineCompliance(Figure.Nought))
                 {
                     result = MatchResult.Defeat;
                     return true;
                 }
             }
 
+            if (_field.NoFreeMarks())
+            {
+                result = MatchResult.Draw;
+                return true;
+            }
+
             result = MatchResult.None;
             return false;
         }
-    }
-
-    public enum Turn
-    {
-        Player,
-        Enemy
     }
 
     public enum MatchResult

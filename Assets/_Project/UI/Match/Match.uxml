@@ -1,0 +1,19 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Project/UI/Match/Match.uss?fileID=7433441132597879392&amp;guid=54f544c37da09624680982b293c1ae24&amp;type=3#Match" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:VisualElement name="counter">
+            <ui:VisualElement name="player-counter">
+                <ui:Label text="Player" name="player-name" class="standard-text" />
+                <ui:Label text="0" name="player-count" class="standard-text" />
+            </ui:VisualElement>
+            <ui:VisualElement name="enemy-counter">
+                <ui:Label text="Enemy" name="enemy-name" class="standard-text" />
+                <ui:Label text="0" name="enemy-count" class="standard-text" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="turn">
+            <ui:Label text="Turn" name="turn-text" class="standard-text" />
+            <ui:Label text="Anyone" name="turn-anyone" class="standard-text" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

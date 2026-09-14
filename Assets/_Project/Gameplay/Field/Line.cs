@@ -13,11 +13,7 @@ namespace TicTacToe.Gameplay
 
         public readonly IEnumerable<Mark> Marks => _marks;
 
-        public readonly bool CheckCrossLine() => CheckLineCompliance(Figure.Cross);
-
-        public readonly bool CheckNoughtLine() => CheckLineCompliance(Figure.Nought);
-
-        private readonly bool CheckLineCompliance(Figure figure)
+        public readonly bool CheckLineCompliance(Figure figure)
         {
             var markWithFigureCompliance = _marks.Where(mark => mark.State == Mark.ConvertFigureToMarkState(figure));
             return markWithFigureCompliance.Count() == MarkCountInLine;
