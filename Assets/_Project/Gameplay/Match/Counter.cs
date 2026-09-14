@@ -8,82 +8,49 @@ namespace TicTacToe.Gameplay
     [HideMonoScript]
     public class Counter : MonoBehaviour
     {
-        [SerializeField] private MatchSystem _matchSystem;
-        [Title("Counts")]
-        [LabelText("Enemy"), SerializeField] private TextMesh _enemyCount;
-        [LabelText("Player"), SerializeField] private TextMesh _playerCount;
+        [SerializeField] private CountData _data;
 
-        private CounterData _data;
         private const int Point = 1;
-        private const string CounterSave = "counter_save.json";
+        private static string DataPath => Path.Combine(Application.persistentDataPath, "count_save.json");
 
-        [Title("Points")]
-        [LabelText("Player"), ShowInInspector] public int PlayerPoint => LoadData().PlayerPoints;
-
-        [LabelText("Enemy"), ShowInInspector] public int EnemyPoint => LoadData().EnemyPoints;
-
-        private void Awake() => _data = LoadData();
-
-        private void Start() => SetText();
-
-        private void OnEnable() => _matchSystem.GameOver += OnGameOver;
-
-        private void OnDisable() => _matchSystem.GameOver -= OnGameOver;
-
-        [PropertySpace(8), EnableInEditMode, Button]
-        public void ResetData()
+        [PropertySpace(16), Title("Data")]
+        [Button(Name = "Save")]
+        public void SaveData()
         {
-            _data = new CounterData();
-            SaveData(_data);
+            string json = JsonUtility.ToJson(_data, true);
+            File.WriteAllText(DataPath, json);
         }
 
-        private void OnGameOver(MatchResult matchResult)
+        [Button(Name = "Load")]
+        public CountData LoadData()
         {
-            SetPoints(matchResult);
-            SetText();
-            SaveData(_data);
-        }
-
-        private void SetPoints(MatchResult matchResult)
-        {
-            switch (matchResult)
+            if (File.Exists(DataPath))
             {
-                case MatchResult.Victory: _data.PlayerPoints += Point; break;
-                case MatchResult.Defeat: _data.EnemyPoints += Point; break;
-            }
-        }
+                string json = File.ReadAllText(DataPath);
+                var data = JsonUtility.FromJson<CountData>(json);
 
-        private void SetText()
-        {
-            _enemyCount.text = _data.EnemyPoints.ToString();
-            _playerCount.text = _data.PlayerPoints.ToString();
-        }
+                if (Application.isEditor)
+                    _data = data;
 
-        private static void SaveData(CounterData data)
-        {
-            string json = JsonUtility.ToJson(data, true);
-            string path = Path.Combine(Application.persistentDataPath, CounterSave);
-
-            File.WriteAllText(path, json);
-        }
-
-        private static CounterData LoadData()
-        {
-            string path = Path.Combine(Application.persistentDataPath, CounterSave);
-
-            if (File.Exists(path))
-            {
-                string json = File.ReadAllText(path);
-                CounterData data = JsonUtility.FromJson<CounterData>(json);
                 return data;
             }
 
-            return new CounterData();
+            throw new FileNotFoundException("No this save file");
         }
+
+        [Button(Name = "Reset")]
+        public void ResetData() => _data = new CountData();
+
+        [PropertySpace(16), Title("Points")]
+        [Button]
+        public void AddPlayerPoint() => _data.PlayerPoints += Point;
+
+        [Button]
+        public void AddEnemyPoint() => _data.EnemyPoints += Point;
     }
 
     [Serializable]
-    public class CounterData
+    public struct CountData
     {
         public int PlayerPoints, EnemyPoints;
     }
