@@ -8,10 +8,21 @@ namespace TicTacToe.Gameplay
     [HideMonoScript]
     public class Counter : MonoBehaviour
     {
+        public event Action<CountData> UpdateCount;
+
+        [SerializeField] private MatchSystem _matchSystem;
         [SerializeField] private CountData _data;
 
         private const int Point = 1;
         private static string DataPath => Path.Combine(Application.persistentDataPath, "count_save.json");
+
+        private void Awake() => _data = LoadData();
+
+        private void OnEnable() => _matchSystem.GameOver += OnGameOver;
+
+        private void OnDisable() => _matchSystem.GameOver -= OnGameOver;
+
+        private void Start() => UpdateCount?.Invoke(_data);
 
         [PropertySpace(16), Title("Data")]
         [Button(Name = "Save")]
@@ -35,7 +46,7 @@ namespace TicTacToe.Gameplay
                 return data;
             }
 
-            throw new FileNotFoundException("No this save file");
+            return default;
         }
 
         [Button(Name = "Reset")]
@@ -47,6 +58,18 @@ namespace TicTacToe.Gameplay
 
         [Button]
         public void AddEnemyPoint() => _data.EnemyPoints += Point;
+
+        private void OnGameOver(MatchResult result)
+        {
+            switch (result)
+            {
+                case MatchResult.Victory: AddPlayerPoint(); break;
+                case MatchResult.Defeat: AddEnemyPoint(); break;
+            }
+
+            UpdateCount?.Invoke(_data);
+            SaveData();
+        }
     }
 
     [Serializable]

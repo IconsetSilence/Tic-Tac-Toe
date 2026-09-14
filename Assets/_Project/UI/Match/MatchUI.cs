@@ -10,6 +10,8 @@ namespace TicTacToe.UI
     [RequireComponent(typeof(UIDocument))]
     public class MatchUI : MonoBehaviour
     {
+        [SerializeField] private MatchSystem _matchSystem;
+        [SerializeField] private Counter _counter;
         [Title("Text Color In Turn")]
         [LabelText("Player"), SerializeField] private Color _playerTurnColor = Color.red;
         [LabelText("Enemy"), SerializeField] private Color _enemyTurnColor = Color.blue;
@@ -26,6 +28,15 @@ namespace TicTacToe.UI
             _playerCountLabel = _root.Q<Label>(PlayerCountName);
             _enemyCountLabel = _root.Q<Label>(EnemyCountName);
             _turnAnyoneLabel = _root.Q<Label>(TurnAnyoneName);
+
+            _matchSystem.NextTurn += SetTurn;
+            _counter.UpdateCount += OnUpdateCount;
+        }
+
+        private void OnDisable()
+        {
+            _matchSystem.NextTurn -= SetTurn;
+            _counter.UpdateCount -= OnUpdateCount;
         }
 
         [PropertySpace(16)]
@@ -48,6 +59,12 @@ namespace TicTacToe.UI
             _turnAnyoneLabel.text = turn.ToString();
             _turnAnyoneLabel.style.color = textColorResult;
             _turnAnyoneLabel.style.unityTextOutlineColor = textColorResult;
+        }
+
+        private void OnUpdateCount(CountData count)
+        {
+            SetPlayerPoint(count.PlayerPoints);
+            SetEnemyPoint(count.EnemyPoints);
         }
 
         private static void SetPoints(Label countLabel, int value)
