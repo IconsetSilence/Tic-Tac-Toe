@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using TicTacToe.Core;
 using TriInspector;
 using UnityEngine;
 
@@ -16,7 +17,7 @@ namespace TicTacToe.Gameplay
         private const int Point = 1;
         private static string DataPath => Path.Combine(Application.persistentDataPath, "count_save.json");
 
-        private void Awake() => _data = LoadData();
+        private void Awake() => LoadData();
 
         private void OnEnable() => _matchSystem.GameOver += OnGameOver;
 
@@ -25,36 +26,17 @@ namespace TicTacToe.Gameplay
         private void Start() => UpdateCount?.Invoke(_data);
 
         [PropertySpace(16), Title("Data")]
-        [Button(Name = "Save")]
-        public void SaveData()
+        [Button("Save")]
+        private void SaveData() => DataSaveSystem.Instance.Save(_data, DataPath);
+
+        [Button("Load")]
+        private void LoadData() => _data = DataSaveSystem.Instance.Load<CountData>(DataPath);
+
+        [Button("Reset")]
+        private void ResetData()
         {
-            string json = JsonUtility.ToJson(_data, true);
-            File.WriteAllText(DataPath, json);
-        }
-
-        [Button(Name = "Load")]
-        public CountData LoadData()
-        {
-            if (File.Exists(DataPath))
-            {
-                string json = File.ReadAllText(DataPath);
-                var data = JsonUtility.FromJson<CountData>(json);
-
-                if (Application.isEditor)
-                    _data = data;
-
-                return data;
-            }
-
-            return default;
-        }
-
-        [Button(Name = "Reset")]
-        public void ResetData()
-        {
-            _data = new CountData();
+            DataSaveSystem.Instance.Restart(ref _data, DataPath);
             UpdateCount?.Invoke(_data);
-            SaveData();
         }
 
         [PropertySpace(16), Title("Points")]
