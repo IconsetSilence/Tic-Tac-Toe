@@ -26,6 +26,7 @@ namespace TicTacToe.Gameplay
 
         public void StartNewMatch()
         {
+            _result = MatchResult.None;
             NewMatch?.Invoke();
 
             var firstTurn = GetRandomTurn();

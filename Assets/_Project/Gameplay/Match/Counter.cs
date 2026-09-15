@@ -50,7 +50,12 @@ namespace TicTacToe.Gameplay
         }
 
         [Button(Name = "Reset")]
-        public void ResetData() => _data = new CountData();
+        public void ResetData()
+        {
+            _data = new CountData();
+            UpdateCount?.Invoke(_data);
+            SaveData();
+        }
 
         [PropertySpace(16), Title("Points")]
         [Button]

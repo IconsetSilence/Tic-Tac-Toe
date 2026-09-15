@@ -27,12 +27,13 @@ namespace TicTacToe.Gameplay
 
         private async UniTask MakeTurn()
         {
-            var freeMarks = _field.Marks.Where(mark => mark.Free);
-            var randomMarkIndex = Random.Range(0, freeMarks.Count());
-            var randomMark = freeMarks.ElementAt(randomMarkIndex);
             var turnTime = Random.Range(_minTurnTime, _maxTurnTime);
 
             await UniTask.WaitForSeconds(turnTime, cancellationToken: destroyCancellationToken);
+
+            var freeMarks = _field.Marks.Where(mark => mark.Free);
+            var randomMarkIndex = Random.Range(0, freeMarks.Count());
+            var randomMark = freeMarks.ElementAt(randomMarkIndex);
 
             if (_matchSystem.MatchActive)
             {
