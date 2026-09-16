@@ -1,8 +1,11 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/_Project/UI/MainMenu/MainMenu.uss?fileID=7433441132597879392&amp;guid=8d6515a922da03f4a878642dc6072e98&amp;type=3#MainMenu" />
     <ui:VisualElement style="flex-grow: 1;">
-        <ui:VisualElement name="Logo" style="flex-grow: 1;" />
-        <ui:Button text="Play" name="Play" class="std-button" />
-        <ui:Button text="Quit" name="Quit" class="std-button" />
+        <ui:VisualElement class="std-button-container">
+            <ui:Button text="Play" name="play-button" class="std-button" />
+            <ui:Button text="Reset" name="reset-button" class="std-button" />
+            <ui:Button text="Quit" name="quit-button" class="std-button" />
+        </ui:VisualElement>
+        <ui:VisualElement name="logo" />
     </ui:VisualElement>
 </ui:UXML>
