@@ -34,6 +34,7 @@ namespace TicTacToe.UI
         private void OnDisable()
         {
             _playButton.UnregisterCallback<ClickEvent>(OnPlayButtonClick);
+            _resetButton.UnregisterCallback<ClickEvent>(OnResetButtonClick);
             _quitButton.UnregisterCallback<ClickEvent>(OnQuitButtonClick);
         }
 

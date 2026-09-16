@@ -64,6 +64,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 637adb07d3415064f82bfedf26221fac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _matchSystem: {fileID: 0}
+  _counter: {fileID: 0}
+  _mainMenuScene: Assets/_Project/Scenes/Main_Menu.unity
   _playerTurnColor: {r: 1, g: 0, b: 0, a: 1}
   _enemyTurnColor: {r: 0, g: 0, b: 1, a: 1}
   _defaultTurnColor: {r: 1, g: 1, b: 1, a: 1}

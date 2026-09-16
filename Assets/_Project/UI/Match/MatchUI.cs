@@ -2,6 +2,7 @@ using System;
 using TicTacToe.Gameplay;
 using TriInspector;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace TicTacToe.UI
@@ -12,14 +13,16 @@ namespace TicTacToe.UI
     {
         [SerializeField] private MatchSystem _matchSystem;
         [SerializeField] private Counter _counter;
+        [Scene, SerializeField] private string _mainMenuScene;
         [Title("Text Color In Turn")]
         [LabelText("Player"), SerializeField] private Color _playerTurnColor = Color.red;
         [LabelText("Enemy"), SerializeField] private Color _enemyTurnColor = Color.blue;
         [LabelText("Default"), SerializeField] private Color _defaultTurnColor = Color.white;
         private VisualElement _root;
         private Label _playerCountLabel, _enemyCountLabel, _turnAnyoneLabel;
+        private Button _quitButton;
         private const int MinPoints = 0, MaxPoints = 99;
-        private const string PlayerCountName = "player-count", EnemyCountName = "enemy-count", TurnAnyoneName = "turn-anyone";
+        private const string PlayerCountName = "player-count", EnemyCountName = "enemy-count", TurnAnyoneName = "turn-anyone", QuitButtonName = "quit-button";
 
         private void OnEnable()
         {
@@ -28,15 +31,18 @@ namespace TicTacToe.UI
             _playerCountLabel = _root.Q<Label>(PlayerCountName);
             _enemyCountLabel = _root.Q<Label>(EnemyCountName);
             _turnAnyoneLabel = _root.Q<Label>(TurnAnyoneName);
+            _quitButton = _root.Q<Button>(QuitButtonName);
 
             _matchSystem.NextTurn += SetTurn;
             _counter.UpdateCount += OnUpdateCount;
+            _quitButton.RegisterCallback<ClickEvent>(OnQuitButtonClick);
         }
 
         private void OnDisable()
         {
             _matchSystem.NextTurn -= SetTurn;
             _counter.UpdateCount -= OnUpdateCount;
+            _quitButton.UnregisterCallback<ClickEvent>(OnQuitButtonClick);
         }
 
         [PropertySpace(16)]
@@ -60,6 +66,8 @@ namespace TicTacToe.UI
             _turnAnyoneLabel.style.color = textColorResult;
             _turnAnyoneLabel.style.unityTextOutlineColor = textColorResult;
         }
+
+        private void OnQuitButtonClick(ClickEvent clickEvent) => SceneManager.LoadScene(_mainMenuScene);
 
         private void OnUpdateCount(CountData count)
         {

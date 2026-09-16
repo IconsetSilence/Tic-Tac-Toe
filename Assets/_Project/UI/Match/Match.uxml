@@ -15,5 +15,6 @@
             <ui:Label text="Turn" name="turn-text" class="standard-text" />
             <ui:Label text="Anyone" name="turn-anyone" class="standard-text" />
         </ui:VisualElement>
+        <ui:Button text="Quit" name="quit-button" class="std-button" />
     </ui:VisualElement>
 </ui:UXML>
