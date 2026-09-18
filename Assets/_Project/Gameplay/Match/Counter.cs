@@ -1,5 +1,4 @@
 using System;
-using System.IO;
 using TicTacToe.Core;
 using TriInspector;
 using UnityEngine;
@@ -15,7 +14,6 @@ namespace TicTacToe.Gameplay
         [SerializeField] private CountData _data;
 
         private const int Point = 1;
-        private static string DataPath => Path.Combine(Application.persistentDataPath, "count_save.json");
 
         private void Awake() => LoadData();
 
@@ -27,15 +25,15 @@ namespace TicTacToe.Gameplay
 
         [PropertySpace(16), Title("Data")]
         [Button("Save")]
-        private void SaveData() => DataSaveSystem.Instance.Save(_data, DataPath);
+        private void SaveData() => DataSaveSystem.Instance.Save(_data, CountData.SavePath);
 
         [Button("Load")]
-        private void LoadData() => _data = DataSaveSystem.Instance.Load<CountData>(DataPath);
+        private void LoadData() => _data = DataSaveSystem.Instance.Load<CountData>(CountData.SavePath);
 
         [Button("Reset")]
         private void ResetData()
         {
-            DataSaveSystem.Instance.Restart(ref _data, DataPath);
+            DataSaveSystem.Instance.Restart(ref _data, CountData.SavePath);
             UpdateCount?.Invoke(_data);
         }
 

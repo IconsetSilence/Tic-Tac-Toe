@@ -19,29 +19,23 @@ namespace TicTacToe.Gameplay
 
         private void OnDisable() => _matchSystem.NextTurn -= OnNextTurn;
 
-        private void OnNextTurn(Turn turn)
-        {
-            if (turn == Turn.Enemy)
-                MakeTurn().Forget();
-        }
+        private void OnNextTurn(Turn turn) => MakeTurn(turn).Forget();
 
-        private async UniTask MakeTurn()
+        private async UniTask MakeTurn(Turn turn)
         {
             var turnTime = Random.Range(_minTurnTime, _maxTurnTime);
 
             await UniTask.WaitForSeconds(turnTime, cancellationToken: destroyCancellationToken);
 
-            var freeMarks = _field.Marks.Where(mark => mark.Free);
-            var randomMarkIndex = Random.Range(0, freeMarks.Count());
-            var randomMark = freeMarks.ElementAt(randomMarkIndex);
-
-            if (_matchSystem.MatchActive)
+            if (turn == Turn.Enemy && _matchSystem.MatchActive)
             {
-                DrawSome(randomMark);
+                var freeMarks = _field.Marks.Where(mark => mark.Free);
+                var randomMarkIndex = Random.Range(0, freeMarks.Count());
+                var randomMark = freeMarks.ElementAt(randomMarkIndex);
+
+                randomMark.State = MarkState.Nought;
                 _matchSystem.EndTurn();
             }
         }
-
-        private void DrawSome(Mark mark) => mark.State = MarkState.Nought;
     }
 }

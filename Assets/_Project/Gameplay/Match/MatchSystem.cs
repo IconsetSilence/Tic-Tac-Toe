@@ -50,7 +50,7 @@ namespace TicTacToe.Gameplay
         {
             GameOver?.Invoke(_result);
 
-            await UniTask.WaitForSeconds(_newMatchInSeconds);
+            await UniTask.WaitForSeconds(_newMatchInSeconds, cancellationToken: destroyCancellationToken);
 
             StartNewMatch();
         }
