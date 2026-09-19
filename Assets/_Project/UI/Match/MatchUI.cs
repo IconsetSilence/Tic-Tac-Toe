@@ -1,4 +1,5 @@
 using System;
+using TicTacToe.Data;
 using TicTacToe.Gameplay;
 using TriInspector;
 using UnityEngine;

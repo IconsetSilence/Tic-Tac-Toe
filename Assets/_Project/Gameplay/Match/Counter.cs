@@ -1,5 +1,5 @@
 using System;
-using TicTacToe.Core;
+using TicTacToe.Data;
 using TriInspector;
 using UnityEngine;
 
@@ -12,10 +12,15 @@ namespace TicTacToe.Gameplay
 
         [SerializeField] private MatchSystem _matchSystem;
         [SerializeField] private CountData _data;
+        private CountDataRepository _repository;
 
         private const int Point = 1;
 
-        private void Awake() => LoadData();
+        private void Awake()
+        {
+            _repository = new CountDataRepository();
+            LoadData();
+        }
 
         private void OnEnable() => _matchSystem.GameOver += OnGameOver;
 
@@ -25,17 +30,13 @@ namespace TicTacToe.Gameplay
 
         [PropertySpace(16), Title("Data")]
         [Button("Save")]
-        private void SaveData() => DataSaveSystem.Instance.Save(_data, CountData.SavePath);
+        private void SaveData() => _repository.Save(_data);
 
         [Button("Load")]
-        private void LoadData() => _data = DataSaveSystem.Instance.Load<CountData>(CountData.SavePath);
+        private void LoadData() => _data = _repository.Load();
 
         [Button("Reset")]
-        private void ResetData()
-        {
-            DataSaveSystem.Instance.Restart(ref _data, CountData.SavePath);
-            UpdateCount?.Invoke(_data);
-        }
+        private void ResetData() => _repository.Reset();
 
         [PropertySpace(16), Title("Points")]
         [Button]
