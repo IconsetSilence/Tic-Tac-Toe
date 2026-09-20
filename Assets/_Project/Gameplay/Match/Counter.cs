@@ -16,11 +16,10 @@ namespace TicTacToe.Gameplay
 
         private const int Point = 1;
 
-        private void Awake()
-        {
-            _repository = new CountDataRepository();
-            LoadData();
-        }
+        private void OnValidate() => _repository ??= new CountDataRepository();
+
+
+        private void Awake() => LoadData();
 
         private void OnEnable() => _matchSystem.GameOver += OnGameOver;
 
