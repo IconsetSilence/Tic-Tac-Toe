@@ -1,4 +1,5 @@
-using TicTacToe.Data;
+using System.IO;
+using TicTacToe.Core;
 using TriInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,12 +12,11 @@ namespace TicTacToe.UI
     public class MainMenu : MonoBehaviour
     {
         [Scene, SerializeField] private string _matchScene;
+
         private VisualElement _root;
         private Button _playButton, _resetButton, _quitButton;
-        private CountDataRepository _repository;
         private const string QuitButtonName = "quit-button", ResetButtonName = "reset-button", PlayButtonName = "play-button";
-
-        private void Awake() => _repository = new CountDataRepository();
+        private static string CountDataPath => Path.Combine(Application.persistentDataPath, "count_save.json");
 
         private void OnEnable()
         {
@@ -40,7 +40,7 @@ namespace TicTacToe.UI
 
         private void OnPlayButtonClick(ClickEvent clickEvent) => SceneManager.LoadScene(_matchScene, LoadSceneMode.Single);
 
-        private void OnResetButtonClick(ClickEvent clickEvent) => _repository.Reset();
+        private void OnResetButtonClick(ClickEvent clickEvent) => DataSaveSystem.Instance.Delete(CountDataPath);
 
         private void OnQuitButtonClick(ClickEvent clickEvent)
         {

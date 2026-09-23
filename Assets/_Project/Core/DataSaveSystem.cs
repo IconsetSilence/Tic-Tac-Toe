@@ -1,17 +1,17 @@
 using System.IO;
 using UnityEngine;
 
-namespace TicTacToe.Data
+namespace TicTacToe.Core
 {
-    public static class SaveSystem
+    public sealed class DataSaveSystem : Singleton<DataSaveSystem>
     {
-        public static void Save(object data, string path)
+        public void Save(object data, string path)
         {
             string json = JsonUtility.ToJson(data, true);
             File.WriteAllText(path, json);
         }
 
-        public static T Load<T>(string path)
+        public T Load<T>(string path)
         {
             if (File.Exists(path))
             {
@@ -24,10 +24,12 @@ namespace TicTacToe.Data
             return default;
         }
 
-        public static void Reset<T>(string path)
+        public void Restart<T>(ref T data, string path)
         {
-            T data = default;
+            data = default;
             Save(data, path);
         }
+
+        public void Delete(string path) => File.Delete(path);
     }
 }
