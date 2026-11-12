@@ -5,4 +5,4 @@
 
 # Installation
 - There is the source code of game
-- and there is this game (That in the file .rar)
+- and there is this game (That is in the file .rar)
