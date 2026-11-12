@@ -1,5 +1,8 @@
 # Tic Tac Toe
+- First and last version
+- The last version is public for everyone
+- The small project's created by junior
 
-- This project is created by junior
-- The version is early and in the alpha state
-- The game won't get updates and patches
+# Installation
+- There is the source code of game
+- and there is this game (That in the file .rar)
